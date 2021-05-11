@@ -1,0 +1,47 @@
+{
+  "labId": "learning-labs-howto",
+  "title": "How to create a DevNet Learning Lab",
+  "slug": "An introduction on how to create a Cisco DevNet Learning Lab",
+  "time": "30",
+  "tags": [
+    {"title": "Beginner"},
+    {"title": "Coding"}
+  ],
+  "byod": true,
+  "related": [
+    {
+      "labId": "git-intro",
+      "title": "Git 100: Basics of the git version control system"
+    },
+    {
+      "labId": "git-branching",
+      "title": "Git 101: Branching"
+    },
+    {
+      "labId": "git-servers",
+      "title": "Git 102: Using git with servers"
+    }
+  ],
+  "files": [
+    {"title": "Step 1: What is a Learning Lab?",
+     "file": "1.md"},
+    {"title": "Step 2: Outline the tutorial and author in Markdown",
+     "file": "2.md"},
+    {"title": "Step 3: Organize your files",
+     "file": "3.md"},
+    {"title": "Step 4: Store related images, videos, and code samples",
+     "file": "4.md"},
+    {"title": "Step 5: Add Bring Your Own Device (BYOD) information",
+     "file": "5.md"},
+    {"title": "Step 6: Display related Labs",
+     "file": "6.md"},
+    {"title": "Step 7: Create a table of contents",
+     "file": "7.md"},
+    {"title": "Summary",
+     "file": "8.md"}
+  ],
+  "authors": [
+  	{"name": "Adrian Iliesiu", "email": "ailiesiu@cisco.com"}
+  ],
+  "active": true
+}
