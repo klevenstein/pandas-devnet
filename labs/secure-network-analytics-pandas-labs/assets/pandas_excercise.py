@@ -20,7 +20,7 @@ def obtain_df_from_json():
 
 def obtain_df_from_csv():
     df = pd.read_csv(abs_file_path_csv)
-    return 
+    return df
     
 def text_to_num(text, bad_data_val = 0):
     letter_to_number_dict = {
@@ -39,6 +39,11 @@ def text_to_num(text, bad_data_val = 0):
         return int(float(num) * letter_to_number_dict[letter])
     else:
         return float(text)
+
+def average_byte_per_flow(df):
+    df['Total Bytes'] = df['Total Bytes'].apply(text_to_num)
+    average = df['Total Bytes'].mean()
+    return average
 
 if __name__ == '__main__':
     df = obtain_df()
