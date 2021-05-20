@@ -69,6 +69,36 @@ def average_bytes_per_flow_per_hostgroup(df):
     return averages_dict
 
 
+## 7.md
+## Detect above-average flows
+
+def detect_above_average_flows(df_baseline, df_test):
+    baseline_dict = average_bytes_per_flow_per_hostgroup(df_baseline)
+    test_dict = average_bytes_per_flow_per_hostgroup(df_test)
+
+    results_dict = {}
+
+    for subject_peer_pair in test_dict:
+        # subject peer pair does not exist
+        if not subject_peer_pair in baseline_dict:
+            results_dict[subject_peer_pair] = -1
+        # flow is less than or equal to baseline
+        if scan_dict[subject_peer_pair] <= baseline_dict[subject_peer_pair]:
+            results_dict[subject_peer_pair] = 0 
+        # flow is more than the baseline
+        else:
+            results_dict[subject_peer_pair] = 1
+
+    return results_dict
+
+
+
+
+
+
+
+
+
 if __name__ == '__main__':
     df = obtain_df()
     print(df.head())
