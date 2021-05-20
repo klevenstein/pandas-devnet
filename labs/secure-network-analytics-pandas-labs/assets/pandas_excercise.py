@@ -20,7 +20,25 @@ def obtain_df_from_json():
 
 def obtain_df_from_csv():
     df = pd.read_csv(abs_file_path_csv)
-    return df
+    return 
+    
+def text_to_num(text, bad_data_val = 0):
+    letter_to_number_dict = {
+        'K': 1000,
+        'M': 1000000,
+        'B': 1000000000
+    }
+    if not isinstance(text, str):
+        # Non-strings are bad are missing data in poster's submission
+        return bad_data_val
+    elif '--' in text:
+        return bad_data_val
+    elif text[-1] in letter_to_number_dict:
+        # separate out the K, M, or B
+        num, letter = text[:-2], text[-1]
+        return int(float(num) * letter_to_number_dict[letter])
+    else:
+        return float(text)
 
 if __name__ == '__main__':
     df = obtain_df()
