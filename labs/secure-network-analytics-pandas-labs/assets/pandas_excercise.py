@@ -3,13 +3,14 @@ import json
 import os
 import numpy as np
 
+## Hands-on excercise: import dataset with Python
 script_directory = os.path.dirname(__file__) #absolute dir of script
 file_name_json = 'flow-results.json'
 abs_file_path_json = os.path.join(script_directory, file_name_json)
 file_name_csv = 'flow-results.csv'
 abs_file_path_csv = os.path.join(script_directory, file_name_csv)
 
-def obtain_df():
+def obtain_df_from_dict():
     with open(abs_file_path_json) as file:
         flow_data = json.load(file)
     df = pd.DataFrame.from_dict(flow_data)
@@ -23,7 +24,7 @@ def obtain_df_from_csv():
     df = pd.read_csv(abs_file_path_csv)
     return df
 
-## 4.md
+## Hands-on excercise: Calculate average bytes per flow
 ## Average bytes per flow    
 def text_to_num(text, bad_data_val = 0):
     letter_to_number_dict = {
@@ -48,8 +49,13 @@ def average_bytes_per_flow(df):
     average = df['Total Bytes'].mean()
     return average
 
-## 6.md
+## Hands-on excercise: calculate average bytes per flow per host group
 ## Calculate avereage bytes per flow per hostgroup
+
+def strip_host_groups(text):
+    split_string_array = text.split(",")
+    first_host_group = split_string_array[0]
+    return first_host_group
 
 def average_bytes_per_flow_per_hostgroup(df):
     aggregates_dict = {}
@@ -69,7 +75,7 @@ def average_bytes_per_flow_per_hostgroup(df):
     return averages_dict
 
 
-## 7.md
+## Hands-on excercise: detect above-average flows
 ## Detect above-average flows
 
 def detect_above_average_flows(df_baseline, df_test):
@@ -94,11 +100,23 @@ def detect_above_average_flows(df_baseline, df_test):
 
 
 
+def main():
+    # Hands-on excercise: import dataset with Python
+    #TODO df = obtain_df_from_dict()
+    #TODO print(df.head())
+    #TODO print(df.tail())
 
+    # Hands-on excercise: Calculate average bytes per flow
+    #TODO df['Total Bytes'] =  df['Total Bytes'].apply(text_to_num)
+    #TODO print(df['Total Bytes'].mean())
 
+    # Hands-on excercise: calculate average bytes per flow per host group
+    #TODO df['Subject Host Groups'] =  df['Subject Host Groups'].apply(strip_host_groups)
+    #TODO df['Peer Host Groups'] =  df['Peer Host Groups'].apply(strip_host_groups)
 
+    # Hands-on excercise: detect above-average flows
+    #TODO
 
 
 if __name__ == '__main__':
-    df = obtain_df()
-    print(df.head())
+    main()
