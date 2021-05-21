@@ -2,6 +2,7 @@ import pandas as pd
 import json
 import os
 import numpy as np
+import matplotlib.pylab as plt
 
 ## Hands-on excercise: import dataset with Python
 script_directory = os.path.dirname(__file__) #absolute dir of script
@@ -74,32 +75,36 @@ def average_bytes_per_flow_per_hostgroup(df):
 
     return averages_dict
 
-def aggregate_bytes_per_hostgroup_sent_or_received(df, sent_or_received):
+def check_sent_or_received(sent_or_received):
     if sent_or_received == "sent":
         peer_or_subject_bytes = "Subject Bytes"
+        return peer_or_subject_bytes
     elif sent_or_received == "received":
         peer_or_subject_bytes = "Peer Bytes"
+        return peer_or_subject_bytes
     else:
         raise Exception("Only 'sent' or 'received' allowed")
 
+def aggregate_bytes_per_hostgroup_sent_or_received(df, sent_or_received):
+    peer_or_subject_bytes = check_sent_or_received(sent_or_received)
+
     aggregates_dict = {}
-    for _, row in df.iterrows():
-        subject_host_group = row['Subject Host Groups']
-        number_of_bytes = row[peer_or_subject_bytes]
-        if not subject_host_group in aggregates_dict:
-            aggregates_dict[subject_host_group] = [number_of_bytes]
-        else:
-            aggregates_dict[subject_host_group].append(number_of_bytes)
+    for hostgroup in df['Subject Host Groups'].unique():
+        hostgroup_index = df.groupby(by="Subject Host Groups").groups[hostgroup]
+        bytes_values = df.iloc[hostgroup_index][peer_or_subject_bytes].values
+        aggregates_dict[hostgroup] = bytes_values
+
     return aggregates_dict
 
 def average_bytes_per_hostgroup_sent_or_received(df, sent_or_received):
-    aggregates_dict = aggregate_bytes_per_hostgroup_sent_or_received(df, sent_or_received)
-    results_dict = {}
-    for hostgroup in aggregates_dict:
-        total_bytes = aggregates_dict[hostgroup]
-        average_bytes = np.mean(total_bytes)
-        results_dict[hostgroup] = average_bytes
-    return results_dict
+    peer_or_subject_bytes = check_sent_or_received(sent_or_received)
+
+    averages_dict = {}
+    for hostgroup in df['Subject Host Groups'].unique():
+        hostgroup_index = df.groupby(by="Subject Host Groups").groups[hostgroup]
+        bytes_averages = df.iloc[hostgroup_index][peer_or_subject_bytes].values.mean()
+        averages_dict[hostgroup] = bytes_averages
+    return averages_dict
 
 
 ## Hands-on excercise: detect above-average flows
