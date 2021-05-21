@@ -122,24 +122,17 @@ def plot_flows(aggregates_dict, sent_or_received):
         
         plt.show()
 
-def detect_above_average_flows(df_baseline, df_test):
-    baseline_dict = average_bytes_per_flow_per_hostgroup(df_baseline)
-    test_dict = average_bytes_per_flow_per_hostgroup(df_test)
+def detect_above_average_flows(df, sent_or_received):
+    peer_or_subject_bytes = check_sent_or_received(sent_or_received)
+    averages_dict = average_bytes_per_hostgroup_sent_or_received(df, sent_or_received)
 
-    results_dict = {}
+    df_list = []
+    for subject_host_group in averages_dict:
+        sub_df = df.query(f'`Subject Bytes` > {averages_dict[subject_host_group]} & `Subject Host Groups` == "{subject_host_group}"')
+        df_list.append(sub_df)
+    anomaly_df = pd.concat(df_list)
+    return anomaly_df
 
-    for subject_peer_pair in test_dict:
-        # subject peer pair does not exist
-        if not subject_peer_pair in baseline_dict:
-            results_dict[subject_peer_pair] = -1
-        # flow is less than or equal to baseline
-        if test_dict[subject_peer_pair] <= baseline_dict[subject_peer_pair]:
-            results_dict[subject_peer_pair] = 0 
-        # flow is more than the baseline
-        else:
-            results_dict[subject_peer_pair] = 1
-
-    return results_dict
 
 
 def main():
@@ -166,9 +159,8 @@ def main():
     # Hands-on excercise: detect above-average flows
     #TODO plot_flows(total_sent, 'sent')
     #TODO plot_flows(total_received, 'received)
+    #TODO print(detect_above_average_flows(df, "sent"))
+     #TODO print(detect_above_average_flows(df, "received"))
     
-
-
-
 if __name__ == '__main__':
     main()
