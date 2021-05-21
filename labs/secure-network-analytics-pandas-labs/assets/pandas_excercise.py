@@ -133,8 +133,6 @@ def detect_above_average_flows(df, sent_or_received):
     anomaly_df = pd.concat(df_list)
     return anomaly_df
 
-
-
 def main():
     # Hands-on excercise: import dataset with Python
     #TODO df = obtain_df_from_dict()
