@@ -30,14 +30,14 @@ def obtain_df_from_csv():
 
 ## Hands-on excercise: Calculate average bytes per flow
 ## Average bytes per flow    
-def text_to_num(text, bad_data_val = 0):
+def text_to_num(text, missing_data = 0):
     letter_to_number_dict = {
         'K': 1000,
         'M': 1000000,
         'B': 1000000000
     }
     if not isinstance(text, str):
-        # Non-strings are missing data 
+        # Non-strings and missing data will be returned as 0
         return bad_data_val
     elif '--' in text:
         return bad_data_val
