@@ -105,6 +105,18 @@ def average_bytes_per_hostgroup_sent_or_received(df, sent_or_received):
 ## Hands-on excercise: detect above-average flows
 ## Detect above-average flows
 
+def plot_flows(aggregates_dict, sent_or_received):
+    for subject_host_group in aggregates_dict:
+        plt.figure()
+        x = np.arange(len(aggregates_dict[subject_host_group]))
+        y = np.array(aggregates_dict[subject_host_group])
+
+        plt.plot(x,y)
+        plt.title(f'The number of bytes {sent_or_received} from {subject_host_group}')
+        plt.ylabel('Bytes')
+        
+        plt.show()
+
 def detect_above_average_flows(df_baseline, df_test):
     baseline_dict = average_bytes_per_flow_per_hostgroup(df_baseline)
     test_dict = average_bytes_per_flow_per_hostgroup(df_test)
@@ -140,11 +152,15 @@ def main():
     # Hands-on excercise: calculate average bytes per flow per host group
     #TODO df['Subject Host Groups'] =  df['Subject Host Groups'].apply(strip_host_groups)
     #TODO df['Peer Host Groups'] =  df['Peer Host Groups'].apply(strip_host_groups)
+
+    #TODO total_sent = aggregate_bytes_per_hostgroup_sent_or_received(df, 'sent')
+    #TODO total_received = aggregate_bytes_per_hostgroup_sent_or_received(df, 'received')
     #TODO print(average_bytes_per_hostgroup_sent_or_received(df, 'sent'))
     #TODO print(average_bytes_per_hostgroup_sent_or_received(df, 'received'))
 
     # Hands-on excercise: detect above-average flows
-    #TODO
+    #TODO plot_flows(total_sent, 'sent')
+    #TODO plot_flows(total_received, 'received)
     
 
 
