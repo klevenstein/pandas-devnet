@@ -11,16 +11,19 @@ abs_file_path_json = os.path.join(script_directory, file_name_json)
 file_name_csv = 'flow-results.csv'
 abs_file_path_csv = os.path.join(script_directory, file_name_csv)
 
+# Option 1
 def obtain_df_from_dict():
     with open(abs_file_path_json) as file:
         flow_data = json.load(file)
     df = pd.DataFrame.from_dict(flow_data)
     return df
 
+# Option 2
 def obtain_df_from_json():
     df = pd.read_json(abs_file_path_json)
     return df
 
+# Option 3
 def obtain_df_from_csv():
     df = pd.read_csv(abs_file_path_csv)
     return df
