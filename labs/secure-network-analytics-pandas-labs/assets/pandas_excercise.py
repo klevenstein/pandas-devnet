@@ -74,6 +74,33 @@ def average_bytes_per_flow_per_hostgroup(df):
 
     return averages_dict
 
+def aggregate_bytes_per_hostgroup_sent_or_received(df, sent_or_received):
+    if sent_or_received == "sent":
+        peer_or_subject_bytes = "Subject Bytes"
+    elif sent_or_received == "received":
+        peer_or_subject_bytes = "Peer Bytes"
+    else:
+        raise Exception("Only 'sent' or 'received' allowed")
+
+    aggregates_dict = {}
+    for _, row in df.iterrows():
+        subject_host_group = row['Subject Host Groups']
+        number_of_bytes = row[peer_or_subject_bytes]
+        if not subject_host_group in aggregates_dict:
+            aggregates_dict[subject_host_group] = [number_of_bytes]
+        else:
+            aggregates_dict[subject_host_group].append(number_of_bytes)
+    return aggregates_dict
+
+def average_bytes_per_hostgroup_sent_or_received(df, sent_or_received):
+    aggregates_dict = aggregate_bytes_per_hostgroup_sent_or_received(df, sent_or_received)
+    results_dict = {}
+    for hostgroup in aggregates_dict:
+        total_bytes = aggregates_dict[hostgroup]
+        average_bytes = np.mean(total_bytes)
+        results_dict[hostgroup] = average_bytes
+    return results_dict
+
 
 ## Hands-on excercise: detect above-average flows
 ## Detect above-average flows
@@ -89,15 +116,13 @@ def detect_above_average_flows(df_baseline, df_test):
         if not subject_peer_pair in baseline_dict:
             results_dict[subject_peer_pair] = -1
         # flow is less than or equal to baseline
-        if scan_dict[subject_peer_pair] <= baseline_dict[subject_peer_pair]:
+        if test_dict[subject_peer_pair] <= baseline_dict[subject_peer_pair]:
             results_dict[subject_peer_pair] = 0 
         # flow is more than the baseline
         else:
             results_dict[subject_peer_pair] = 1
 
     return results_dict
-
-
 
 
 def main():
@@ -108,14 +133,20 @@ def main():
 
     # Hands-on excercise: Calculate average bytes per flow
     #TODO df['Total Bytes'] =  df['Total Bytes'].apply(text_to_num)
-    #TODO print(df['Total Bytes'].mean())
+    #TODO df['Subject Bytes'] =  df['Subject Bytes'].apply(text_to_num)
+    #TODO df['Peer Bytes'] =  df['Peer Bytes'].apply(text_to_num)
+    #TODO print("The average bytes per flow is ", df['Total Bytes'].mean())
 
     # Hands-on excercise: calculate average bytes per flow per host group
     #TODO df['Subject Host Groups'] =  df['Subject Host Groups'].apply(strip_host_groups)
     #TODO df['Peer Host Groups'] =  df['Peer Host Groups'].apply(strip_host_groups)
+    #TODO print(average_bytes_per_hostgroup_sent_or_received(df, 'sent'))
+    #TODO print(average_bytes_per_hostgroup_sent_or_received(df, 'received'))
 
     # Hands-on excercise: detect above-average flows
     #TODO
+    
+
 
 
 if __name__ == '__main__':
