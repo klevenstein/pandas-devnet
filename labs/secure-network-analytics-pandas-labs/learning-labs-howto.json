@@ -1,47 +1,47 @@
 {
-  "labId": "learning-labs-howto",
-  "title": "How to create a DevNet Learning Lab",
-  "slug": "An introduction on how to create a Cisco DevNet Learning Lab",
-  "time": "30",
+  "labId": "pandas-secure-analytics",
+  "title": "Cisco Secure Network Analytics labs with Python Pandas",
+  "slug": "Learn more aboutCisco Secure Network Analytics and how to work with datasets and do anomoly detection with Python Pandas.",
+  "time": "45",
   "tags": [
-    {"title": "Beginner"},
-    {"title": "Coding"}
+    {"title": "Intermediate"},
+    {"title": "Coding"},
+    {"title": "Stealthwatch"},
+    {"title": "Secure Network Analytics"},
+    {"title": "Pandas"}
   ],
   "byod": true,
   "related": [
     {
-      "labId": "git-intro",
-      "title": "Git 100: Basics of the git version control system"
+      "labId": "swc",
+      "title": "Cisco Stealthwatch Cloud"
     },
     {
-      "labId": "git-branching",
-      "title": "Git 101: Branching"
-    },
-    {
-      "labId": "git-servers",
-      "title": "Git 102: Using git with servers"
+      "labId": "stealthwatch-enterprise-module",
+      "title": "Stealthwatch Enterprise"
     }
   ],
   "files": [
-    {"title": "Step 1: What is a Learning Lab?",
+    {"title": "Cisco Secure Network Analytics labs with Python Pandas",
      "file": "1.md"},
-    {"title": "Step 2: Outline the tutorial and author in Markdown",
+    {"title": "Intro to Cisco Secure Network Analytics",
      "file": "2.md"},
-    {"title": "Step 3: Organize your files",
+    {"title": "Intro to the dataset and Pandas",
      "file": "3.md"},
-    {"title": "Step 4: Store related images, videos, and code samples",
+    {"title": "Hands-on excercise: import dataset with Python",
      "file": "4.md"},
-    {"title": "Step 5: Add Bring Your Own Device (BYOD) information",
+    {"title": "Hands-on excercise: Calculate average bytes per flow",
      "file": "5.md"},
-    {"title": "Step 6: Display related Labs",
+    {"title": "Hands-on excercise: calculate average bytes per flow per host group",
      "file": "6.md"},
-    {"title": "Step 7: Create a table of contents",
+    {"title": "Hands-on excercise: detect above-average flows",
      "file": "7.md"},
-    {"title": "Summary",
+    {"title": "Wrap-Up",
      "file": "8.md"}
   ],
   "authors": [
-  	{"name": "Adrian Iliesiu", "email": "ailiesiu@cisco.com"}
+    {"name": "Christopher van der Made", "email": "chrivand@cisco.com"},
+    {"name": "Simon Fang  ", "email": "sifang@cisco.com"}
   ],
   "active": true
 }
