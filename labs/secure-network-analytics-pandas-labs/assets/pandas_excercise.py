@@ -125,16 +125,14 @@ def plot_flows(aggregates_dict, sent_or_received):
         
         plt.show()
 
-def detect_above_average_flows(df, sent_or_received):
+def detect_top_outliers(df, sent_or_received, number_of_outliers):
     peer_or_subject_bytes = check_sent_or_received(sent_or_received)
-    averages_dict = average_bytes_per_hostgroup_sent_or_received(df, sent_or_received)
-
-    df_list = []
-    for subject_host_group in averages_dict:
-        sub_df = df.query(f'`Subject Bytes` > {averages_dict[subject_host_group]} & `Subject Host Groups` == "{subject_host_group}"')
-        df_list.append(sub_df)
-    anomaly_df = pd.concat(df_list)
-    return anomaly_df
+    
+    for host_group in df['Subject Host Groups'].unique():
+        filtered_df = df[df['Subject Host Groups'] == host_group]
+        filtered_df = filtered_df.sort_values(by=[peer_or_subject_bytes], ascending=False)[:number_of_outliers]
+        print(filtered_df)
+    
 
 def main():
     # Hands-on excercise: import dataset with Python
@@ -160,8 +158,8 @@ def main():
     # Hands-on excercise: detect above-average flows
     #TODO plot_flows(total_sent, 'sent')
     #TODO plot_flows(total_received, 'received)
-    #TODO print(detect_above_average_flows(df, "sent"))
-    #TODO print(detect_above_average_flows(df, "received"))
+    #TODO detect_top_outliers(df, sent_or_received="sent", number_of_outliers=5)
+    #TODO detect_top_outliers(df, sent_or_received="received", number_of_outliers=5)
     
 if __name__ == '__main__':
     main()
